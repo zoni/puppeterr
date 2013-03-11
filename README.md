@@ -7,6 +7,66 @@ repository into it's own Python virtualenv.
 Note: I wrote this late on a Sunday night. Though it's tested, it does not 
 currently contain actual tests.
 
+Documentation
+-------------
+
+This module contains embedded rdoc documentation, use the `puppet doc` tool to generate it.
+Alternatively, here's the same documentation in markdown:
+
+### Define: Err
+
+A defined resource type which installs Err straight from a Git repository
+and into it's own Python virtualenv
+
+#### Parameters
+
+*checkout* 
+
+  (required) The directory to check out the Git repository into.
+
+*virtualenv*
+
+  (required) The directory to create the virtualenv in.
+
+*source*
+
+   The repository to clone from. Defaults to upstream (git://github.com/gbin/err.git).
+
+*revision*
+
+   The specific revision to install. Defaults to the latest commit on master.
+
+*pythonversion*
+
+   The version of python to install the virtualenv with. Takes any valid value the
+   --python flag to virtualenv supports. Default to the interpreter that virtualenv
+   was installed with (/usr/bin/python).
+
+#### Examples
+
+     # Install the Python 2 version of Err to /usr/share/err/python2
+	 err { 'err2':
+	   checkout => '/usr/share/err/repo',
+	   virtualenv => '/usr/share/err/python2/',
+	   pythonversion => 'python2',
+	 }
+
+     # Install the Python 3 version of Err to /usr/share/err/python3
+     # using the same Git checkout that was already used for Python 2
+	 err { 'err3':
+	   checkout => '/usr/share/err/repo',
+	   virtualenv => '/usr/share/err/python3/',
+	   pythonversion => 'python3',
+	 }
+
+### Class: err::packages
+
+Included by the defined resource `err` to install required packages
+
+#### Parameters
+
+None
+
 Author
 ------
 
